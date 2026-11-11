@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestor de Tareas TI</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="app-page">
+
+  <!-- HEADER -->
+  <header class="app-header">
+    <div class="header-left">
+      <svg class="header-logo" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="32" height="32" rx="8" fill="white" fill-opacity="0.15"/>
+        <rect x="8" y="9" width="16" height="3" rx="1.5" fill="white"/>
+        <rect x="8" y="15" width="12" height="3" rx="1.5" fill="white" opacity="0.8"/>
+        <rect x="8" y="21" width="13" height="3" rx="1.5" fill="white" opacity="0.8"/>
+      </svg>
+      <div>
+        <span class="header-title">Gestor de Tareas TI</span>
+        <span class="header-group">Grupo 4</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <span id="headerUser" class="header-user"></span>
+      <button class="btn btn-ghost" onclick="logout()">Cerrar sesión</button>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="app-main">
+
+    <!-- STATS -->
+    <section class="stats-row">
+      <div class="stat-card">
+        <span class="stat-value" id="statTotal">0</span>
+        <span class="stat-label">Total</span>
+      </div>
+      <div class="stat-card stat-pendiente">
+        <span class="stat-value" id="statPendiente">0</span>
+        <span class="stat-label">Pendientes</span>
+      </div>
+      <div class="stat-card stat-proceso">
+        <span class="stat-value" id="statProceso">0</span>
+        <span class="stat-label">En proceso</span>
+      </div>
+      <div class="stat-card stat-terminada">
+        <span class="stat-value" id="statTerminada">0</span>
+        <span class="stat-label">Terminadas</span>
+      </div>
+    </section>
+
+    <!-- PROGRESS -->
+    <section class="progress-section">
+      <div class="progress-header">
+        <span>Avance del proyecto</span>
+        <span id="progressPercent">0%</span>
+      </div>
+      <div class="progress-bar-track">
+        <div class="progress-bar-fill" id="progressBar"></div>
+      </div>
+    </section>
+
+    <!-- TOOLBAR -->
+    <section class="toolbar">
+      <div class="filter-group">
+        <button class="filter-btn active" data-filter="todas">Todas</button>
+        <button class="filter-btn" data-filter="pendiente">Pendientes</button>
+        <button class="filter-btn" data-filter="en_proceso">En proceso</button>
+        <button class="filter-btn" data-filter="terminada">Terminadas</button>
+      </div>
+      <button class="btn btn-primary" onclick="openModal()">+ Nueva tarea</button>
+    </section>
+
+    <!-- TASKS -->
+    <section id="tasksContainer" class="tasks-grid"></section>
+
+    <p id="emptyState" class="empty-state hidden">
+      No hay tareas aquí todavía.<br>
+      <button class="btn-link" onclick="openModal()">Crea la primera tarea</button>
+    </p>
+
+  </main>
+
+  <!-- MODAL -->
+  <div id="modal" class="modal-overlay hidden" onclick="closeModalOutside(event)">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="modalTitle">Nueva tarea</h2>
+        <button class="modal-close" onclick="closeModal()">×</button>
+      </div>
+      <form id="taskForm">
+        <input type="hidden" id="taskId">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="taskTitle">Título <span class="required">*</span></label>
+            <input type="text" id="taskTitle" placeholder="Nombre de la tarea" required>
+          </div>
+          <div class="form-group">
+            <label for="taskStatus">Estado</label>
+            <select id="taskStatus">
+              <option value="pendiente">Pendiente</option>
+              <option value="en_proceso">En proceso</option>
+              <option value="terminada">Terminada</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="taskDesc">Descripción</label>
+          <textarea id="taskDesc" placeholder="Describe brevemente la tarea" rows="3"></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="taskResponsible">Responsable</label>
+            <input type="text" id="taskResponsible" placeholder="Nombre del responsable">
+          </div>
+          <div class="form-group">
+            <label for="taskDate">Fecha límite</label>
+            <input type="date" id="taskDate">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="taskPriority">Prioridad</label>
+          <select id="taskPriority">
+            <option value="baja">Baja</option>
+            <option value="media" selected>Media</option>
+            <option value="alta">Alta</option>
+          </select>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+          <button type="submit" class="btn btn-primary" id="submitBtn">Guardar tarea</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- DELETE CONFIRM -->
+  <div id="confirmOverlay" class="modal-overlay hidden" onclick="closeConfirmOutside(event)">
+    <div class="modal-card confirm-card">
+      <h3>¿Eliminar tarea?</h3>
+      <p>Esta acción no se puede deshacer.</p>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closeConfirm()">Cancelar</button>
+        <button class="btn btn-danger" id="confirmDeleteBtn">Eliminar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
