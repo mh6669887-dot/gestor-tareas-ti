@@ -1,8 +1,8 @@
 const USERS = [
-  { username: 'admin',    password: 'admin123',    name: 'Administrador' },
-  { username: 'lucas',    password: 'lucas123',    name: 'Lucas Triana' },
-  { username: 'gustavo',  password: 'gustavo123',  name: 'Gustavo Alean' },
-  { username: 'daniela',  password: 'daniela123',  name: 'Daniela Acosta' },
+  { username: 'admin',    password: 'admin123',    name: 'Administrador',  role: 'admin'  },
+  { username: 'lucas',    password: 'lucas123',    name: 'Lucas Triana',   role: 'worker' },
+  { username: 'gustavo',  password: 'gustavo123',  name: 'Gustavo Alean',  role: 'worker' },
+  { username: 'daniela',  password: 'daniela123',  name: 'Daniela Acosta', role: 'worker' },
 ];
 
 // Redirect if already logged in
